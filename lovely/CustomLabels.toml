@@ -1,0 +1,38 @@
+[manifest]
+version = "1.0.0"
+priority = 27
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+info_boxes = {{n=G.UIT.R, config = {align="cm", padding = 0.05, card_pos = card.T.x }, nodes = info_cols}}
+local ret_val = {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
+    {n=G.UIT.C, config={align = "cm", func = 'show_infotip',object = Moveable(),ref_table = next(info_boxes) and info_boxes or nil}, nodes={
+    {n=G.UIT.R, config={padding = outer_padding, r = 0.12, colour = lighten(G.C.JOKER_GREY, 0.5), emboss = 0.07}, nodes={
+    {n=G.UIT.R, config={align = "cm", padding = 0.07, r = 0.1, colour = adjust_alpha(card_type_background, 0.8)}, nodes={
+'''
+position = "at"
+payload = '''
+info_boxes = {{n=G.UIT.R, config = {align="cm", padding = 0.05, card_pos = card.T.x }, nodes = info_cols}}
+local colours = { -- starts with default Colours
+    border = lighten(G.C.JOKER_GREY, 0.5),
+    background = adjust_alpha(card_type_background, 0.8)
+}
+
+local locvars = obj and obj.loc_vars and obj:loc_vars({}, card)
+local mod = obj and obj.mod
+if locvars and (locvars.boxborder or locvars.boxbackground) then
+    colours.border     =  locvars.boxborder      or colours.border
+    colours.background =  locvars.boxbackground  or colours.background
+elseif mod and G.C[mod.prefix] then
+    colours.border     =  G.C[mod.prefix]["border"]      or colours.border
+    colours.background =  G.C[mod.prefix]["background"]  or colours.background
+end
+
+local ret_val = {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
+    {n=G.UIT.C, config={align = "cm", func = 'show_infotip',object = Moveable(),ref_table = next(info_boxes) and info_boxes or nil}, nodes={
+    {n=G.UIT.R, config={padding = outer_padding, r = 0.12, colour = colours.border, emboss = 0.07}, nodes={ -- border
+    {n=G.UIT.R, config={align = "cm", padding = 0.07, r = 0.1, colour = colours.background}, nodes={ -- bg
+'''
+match_indent = true

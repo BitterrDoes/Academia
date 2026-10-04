@@ -1,0 +1,15 @@
+{
+  "id": "academia",
+  "name": "Academia",
+  "author": ["arc", "Bitter"],
+  "description": "Cool mod! get yo grades up, not yo perkeo up",
+  "prefix": "acad",
+  "main_file": "main.lua",
+  "version": "1.0.0",
+  "priority": -3141e59,
+  "badge_colour": "4cb56c",
+  "badge_text_colour": "7dffbe",
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-0827c)"
+  ]
+}
