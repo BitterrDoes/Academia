@@ -121,11 +121,14 @@ match_indent = true
 [patches.pattern]
 target = "functions/common_events.lua"
 pattern = '''
-    end
-else
-    delay(0.4)
+                        G.VIBRATION = G.VIBRATION + 0.4
+                        return true
+                    end
+                }))
+            end
+        end
 '''
-position = "before"
+position = "after"
 payload = '''
 end
 '''
